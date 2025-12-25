@@ -23,14 +23,14 @@ namespace Store.Persistance.Repositories
             _context.Remove(entity);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll(bool changeTracker = false)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(bool changeTracker = false)
         {
             return changeTracker ?
                 await _context.Set<TEntity>().ToListAsync() :
                 await _context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<TEntity?> GetById(TKey key)
+        public async Task<TEntity?> GetByIdsync(TKey key)
         {
             if (key == null) return null;
             return await _context.Set<TEntity>().FindAsync(key);

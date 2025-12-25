@@ -1,8 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
 using Store.Domain.Contracts;
+using Store.Domain.Repository_interfaces;
 using Store.Persistance;
 using Store.Persistance.Data.Contexts;
+using Store.Persistance.Repositories;
+using Store.Services.Mapping.Products;
 
 namespace Store.Web
 {
@@ -22,6 +25,8 @@ namespace Store.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
             builder.Services.AddScoped<IDbInititializer,DbInitializer>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductsPrfile()));
             var app = builder.Build();
             #region Initialize DataSeeding
             using var scope = app.Services.CreateScope();
